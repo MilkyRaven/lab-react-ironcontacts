@@ -1,11 +1,26 @@
+import React, {useState} from 'react';
 import './App.css';
 import contacts from './contacts.json';
 
 function App() {
-  //console.log(contacts)
+  const firstFive = contacts.slice(0, 5);
+  const theOthers = contacts.slice(5)
+  const [contactsList, setContactList] = useState(firstFive)
+  // console.log(contactsList) 
+const addRandom = ()=>{
+  let randomCeleb = theOthers[Math.floor(Math.random()* theOthers.length)]
+  const allCebs= [...contactsList];
+  allCebs.unshift(randomCeleb);
+  console.log(allCebs);
+  setContactList(allCebs)
+}
+
   return (
     <div className="App">
-      <table>
+
+<h1>IronContacts</h1>
+      <button onClick={addRandom}>Add Random Contact</button>
+<table>
         <thead>
           <tr>
             <th>Picture</th>
@@ -15,41 +30,17 @@ function App() {
             <th>Won Emmy</th>
           </tr>
         </thead>
-        <tr>
-          <td><img width={100} src={contacts[0].pictureUrl} alt="" ></img> </td>
-          <td>{contacts[0].name}</td>
-          <td>{contacts[0].popularity}</td>
-          <td>{contacts[0].wonOscar ? "🏆" : "no"}</td>
-          <td>{contacts[0].wonEmmy ? "🏆" : "no"}</td>
-        </tr>
-        <tr>
-          <td><img width={100} src={contacts[1].pictureUrl} alt=""></img> </td>
-          <td>{contacts[1].name}</td>
-          <td>{contacts[1].popularity}</td>
-          <td>{contacts[1].wonOscar ? "🏆" : "no"}</td>
-          <td>{contacts[1].wonEmmy ? "🏆" : "no"}</td>
-        </tr>
-        <tr>
-          <td><img width={100} src={contacts[2].pictureUrl} alt=""></img> </td>
-          <td>{contacts[2].name}</td>
-          <td>{contacts[2].popularity}</td>
-          <td>{contacts[2].wonOscar ? "🏆" : "no"}</td>
-          <td>{contacts[2].wonEmmy ? "🏆" : "no"}</td>
-        </tr>
-        <tr>
-          <td><img width={100} src={contacts[3].pictureUrl} alt=""></img> </td>
-          <td>{contacts[3].name}</td>
-          <td>{contacts[3].popularity}</td>
-          <td>{contacts[3].wonOscar ? "🏆" : "no"}</td>
-          <td>{contacts[3].wonEmmy ? "🏆" : "no"}</td>
-        </tr>
-        <tr>
-          <td><img width={100} src={contacts[4].pictureUrl} alt=""></img> </td>
-          <td>{contacts[4].name}</td>
-          <td>{contacts[4].popularity}</td>
-          <td>{contacts[4].wonOscar ? "🏆" : "no"}</td>
-          <td>{contacts[4].wonEmmy ? "🏆" : "no"}</td>
-        </tr>
+      {contactsList.map((celeb)=> {
+        return (
+          <tr key={celeb.id}>
+          <td><img width={100} src={celeb.pictureUrl} alt="" ></img> </td>
+          <td>{celeb.name}</td>
+          <td>{celeb.popularity}</td>
+          <td>{celeb.wonOscar ? "🏆" : null}</td>
+          <td>{celeb.wonEmmy ? "🏆" : null}</td>
+          </tr>
+        )
+      })} 
       </table>
     </div>
   );
